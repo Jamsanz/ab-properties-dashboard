@@ -1,18 +1,44 @@
 {
   "name": "data-collect-dashboard",
   "version": "0.1.0",
+  "type": "commonjs",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.6.1",
+    "@mui/material": "^5.6.1",
+    "@reduxjs/toolkit": "^1.8.1",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",
     "@testing-library/user-event": "^13.5.0",
+    "@types/axios": "^0.14.0",
     "@types/jest": "^27.4.1",
+    "@types/js-cookie": "^3.0.1",
     "@types/node": "^16.11.27",
     "@types/react": "^18.0.5",
+    "@types/react-beautiful-dnd": "^13.1.2",
+    "@types/react-csv": "^1.1.2",
     "@types/react-dom": "^18.0.1",
+    "@types/react-redux": "^7.1.24",
+    "@types/react-router-dom": "^5.3.3",
+    "@types/toastr": "^2.1.39",
+    "axios": "^0.26.1",
+    "history": "4.10.0",
+    "js-cookie": "^3.0.1",
+    "moment": "^2.29.3",
+    "momentjs": "^2.0.0",
     "react": "^18.0.0",
+    "react-beautiful-dnd": "^13.1.0",
+    "react-bootstrap": "^1.4.3",
+    "react-csv": "^2.2.2",
     "react-dom": "^18.0.0",
+    "react-redux": "^7.2.8",
+    "react-router-dom": "^5.3.0",
     "react-scripts": "5.0.1",
+    "react-toastify": "^8.1.0",
+    "sweetalert2": "^11.4.8",
+    "toastr": "^2.1.4",
     "typescript": "^4.6.3",
     "web-vitals": "^2.1.4"
   },
@@ -25,8 +51,80 @@
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
-    ]
+      "react-app/jest",
+      "eslint:recommended"
+    ],
+    "rules": {
+      "no-empty-function": "error",
+      "no-empty-pattern": "error",
+      "no-multi-spaces": "error",
+      "no-multi-str": "error",
+      "require-await": "error",
+      "array-bracket-spacing": [
+        "error",
+        "never"
+      ],
+      "block-spacing": "error",
+      "brace-style": "error",
+      "comma-spacing": [
+        "error",
+        {
+          "before": false,
+          "after": true
+        }
+      ],
+      "comma-style": [
+        "error",
+        "last"
+      ],
+      "func-call-spacing": [
+        "error",
+        "never"
+      ],
+      "indent": [
+        "error",
+        2
+      ],
+      "key-spacing": [
+        "error",
+        {
+          "beforeColon": false
+        }
+      ],
+      "keyword-spacing": [
+        "error",
+        {
+          "before": true
+        }
+      ],
+      "max-depth": [
+        "error",
+        4
+      ],
+      "max-len": [
+        "error",
+        {
+          "code": 100,
+          "tabWidth": 2
+        }
+      ],
+      "semi": [
+        "error",
+        "always"
+      ],
+      "semi-spacing": [
+        "error",
+        {
+          "before": false,
+          "after": true
+        }
+      ],
+      "semi-style": [
+        "error",
+        "last"
+      ],
+      "no-undef": "off"
+    }
   },
   "browserslist": {
     "production": [
@@ -39,5 +137,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.4",
+    "postcss": "^8.4.12",
+    "tailwindcss": "^3.0.24"
   }
 }

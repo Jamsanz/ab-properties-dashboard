@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +14,38 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+td, th{
+  text-align: center;
+}
+td{
+  padding: 20px 0px;
+  cursor: pointer;
+}
+tr{
+  border-bottom: 1px solid #efefef;
+}
+@layer components{
+  .action-btn{
+    @apply cursor-pointer hover:bg-[#efefef] rounded-full active:scale-110 active:animate-pulse;
+  }
+  .active{
+    @apply bg-[#fafafa] font-bold;
+  }
+  .pulse{
+    @apply active:scale-110 active:animate-pulse;
+  }
+  .input-b{
+    @apply focus:outline-none focus:border-b-2 focus:border-b-[#1976d2];
+  }
+  .check{
+    @apply border-2 border-red-500;
+  }
+  .pagination-item {
+    @apply border-2 w-8 rounded-full p-1 hover:bg-[#1976d2] hover:text-white hover:border-white active:scale-110 active:animate-pulse cursor-pointer;
+  }
+  .p-active {
+    @apply bg-[#1976d2] border-white text-white;
+  }
 }
