@@ -10,7 +10,6 @@ import { useHistory } from "react-router-dom";
 const Response = () => {
   const [response, setResponse] = useState<IResponse>();
   const history = useHistory();
-
   const responseState = useSelector(getResponseSelector);
 
   useEffect(() => {
@@ -18,6 +17,7 @@ const Response = () => {
       setResponse(responseState.response);
     }
   }, [responseState]);
+  
   return (
     <Layout pageName="Response">
       <div className="mb-3">
@@ -30,11 +30,11 @@ const Response = () => {
           {response?.response &&
             Object.keys(response?.response!).map((ques, i) => (
               <p key={i} className="font-bold">
-                {ques}
+                {ques}:
               </p>
             ))}
         </div>
-        <div className="inline-flex flex-col flex-3 space-y-1">
+        <div className="inline-flex flex-col flex-4 space-y-1">
           {response?.response &&
             Object.keys(response?.response!).map((ans, i) => (
               <p key={i} className="">

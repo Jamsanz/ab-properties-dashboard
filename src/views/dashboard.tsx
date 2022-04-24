@@ -12,16 +12,33 @@ import { IForm } from "../interfaces/form.interface";
 import { useHistory } from "react-router-dom";
 import { DeleteAlert, http } from "../utils/utils";
 import getFormsController from "../controllers/getForms.controller";
+import { ChevronLeftOutlined, ChevronRightOutlined } from "@mui/icons-material";
 
 const Dashboard = () => {
   const [forms, setForms] = useState<IForm[]>([]);
-
+  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [pages, setPages] = useState<number[]>([]);
   const dispatch = useDispatch();
   const history = useHistory();
   const formsState = useSelector(getFormsSelector);
 
+  const indexOfFirstItem = (currentPage - 1) * itemsPerPage;
+  const indexOfLastItem = currentPage * itemsPerPage;
+
+  const currentItems: IForm[] = forms.slice(indexOfFirstItem, indexOfLastItem);
+
+  const nextPage = () => setCurrentPage(currentPage + 1);
+  const prevPage = () => setCurrentPage(currentPage - 1);
+
+  const changePage = (page: number) => {
+    if (page !== currentPage) {
+      setCurrentPage(page);
+    }
+  };
+
   const dateAndTime = (string: string) =>
-    moment(string).format("Do MMM YY, h:mm");
+    moment(string).format("D MMM YY, h:mm");
 
   const handleViewResponses = (id: string) => {
     dispatch(
@@ -52,8 +69,16 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(getFormsController());
   }, []);
+
+  useEffect(() => {
+    let page = [];
+    for (let i = 1; i <= Math.ceil(forms.length / itemsPerPage); i++) {
+      page.push(i);
+    }
+    setPages(page);
+  }, [forms, itemsPerPage]);
   return (
-    <Layout pageName="Data">
+    <Layout pageName="Dashboard">
       <Table responsive className="shadow-md rounded-md w-[100%]">
         <thead
           className="
@@ -69,7 +94,7 @@ const Dashboard = () => {
           </tr>
         </thead>
         <tbody>
-          {forms?.map((form, i) => (
+          {currentItems?.map((form, i) => (
             <tr key={i}>
               <th scope="row">{i + 1}</th>
               <td>
@@ -91,6 +116,50 @@ const Dashboard = () => {
             </tr>
           ))}
         </tbody>
+        <tfoot>
+          <tr>
+            <td colSpan={6} className="px-4">
+              <ul className="flex space-x-3 justify-end">
+                <select
+                  className="input-b"
+                  onChange={(e) => setItemsPerPage(+e.target.value)}
+                  value={itemsPerPage}
+                >
+                  <option value="10">10</option>
+                  <option value="100">100</option>
+                  <option value="1000">1000</option>
+                </select>
+                <li
+                  className={`pagination-item ${
+                    currentPage === pages[0] && "disabled"
+                  }`}
+                  onClick={prevPage}
+                >
+                  <ChevronLeftOutlined />
+                </li>
+                {pages.map((page, i) => (
+                  <li
+                    key={i}
+                    onClick={() => changePage(page)}
+                    className={`pagination-item ${
+                      page === currentPage && "p-active"
+                    }`}
+                  >
+                    {page}
+                  </li>
+                ))}
+                <li
+                  className={`pagination-item ${
+                    currentPage === pages.length && "disabled"
+                  }`}
+                  onClick={nextPage}
+                >
+                  <ChevronRightOutlined />
+                </li>
+              </ul>
+            </td>
+          </tr>
+        </tfoot>
       </Table>
     </Layout>
   );

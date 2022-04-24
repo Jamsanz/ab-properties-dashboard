@@ -4,13 +4,10 @@ import FolderIcon from "@mui/icons-material/Folder";
 import StorageOutlinedIcon from "@mui/icons-material/StorageOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-// import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-// import Modal from "./Modal";
 import { DATA_COLLECT_TOKEN } from "../utils/constants";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { LogOut } from "../utils/utils";
-// import { Table } from "react-bootstrap";
 
 interface IProps {
   children?: ReactNode;
@@ -19,10 +16,8 @@ interface IProps {
 }
 
 const Layout = ({ children, pageName, ...props }: IProps) => {
-  // const [open, setOpen] = useState<boolean>(false);
-  const history = useHistory();
   const toggle = (): void => {
-    history.push("/form");
+    window.location.href = "/form";
   };
   const logout = () => {
     LogOut()

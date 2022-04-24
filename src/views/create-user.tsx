@@ -1,13 +1,16 @@
 import { Button } from "@mui/material";
 import React, { FormEvent, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import Layout from "../components/Layout";
 import postUserController from "../controllers/postUser.controller";
+import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 
 const CreateUser = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const dispatch = useDispatch();
+  const history = useHistory();
   const handleSubmit = (e: FormEvent): void => {
     e.preventDefault();
     dispatch(postUserController({ email, password },
@@ -19,9 +22,16 @@ const CreateUser = () => {
 
   return (
     <Layout pageName="Create User">
+      <div className="mb-3">
+        <Button variant="outlined" onClick={() => history.goBack()}>
+          <ArrowBackOutlinedIcon color="primary" />
+        </Button>
+      </div>
       <div className="flex flex-col space-y-5 p-10 bg-white">
-        {/* <h1 className="font-bold text-2xl">Add User</h1> */}
-        <form className="flex flex-col space-y-8 w-[50%]" onSubmit={handleSubmit}>
+        <form
+          className="flex flex-col space-y-8 w-[50%]"
+          onSubmit={handleSubmit}
+        >
           <input
             type="text"
             value={email}
@@ -43,7 +53,9 @@ const CreateUser = () => {
              "
           />
           <div className="">
-            <Button type="submit" variant="contained">Create User</Button>
+            <Button type="submit" variant="contained">
+              Create User
+            </Button>
           </div>
         </form>
       </div>

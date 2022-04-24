@@ -19,7 +19,7 @@ const Forms = () => {
   const dispatch = useDispatch();
   const formsState = useSelector(getFormsSelector);
   const history = useHistory();
-  const [itemsPerPage] = useState<number>(10);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pages, setPages] = useState<number[]>([]);
 
@@ -72,7 +72,7 @@ const Forms = () => {
       page.push(i);
     }
     setPages(page);
-  }, []);
+  }, [forms, itemsPerPage]);
 
   useEffect(() => {
     dispatch(getFormsController());
@@ -141,24 +141,40 @@ const Forms = () => {
           <tr>
             <td colSpan={6} className="px-4">
               <ul className="flex space-x-3 justify-end">
+                <select
+                  className="input-b"
+                  onChange={(e) => setItemsPerPage(+e.target.value)}
+                  value={itemsPerPage}
+                >
+                  <option value="10">10</option>
+                  <option value="100">100</option>
+                  <option value="1000">1000</option>
+                </select>
                 <li
-                  className="pagination-item"
+                  className={`pagination-item ${
+                    currentPage === pages[0] && "disabled"
+                  }`}
                   onClick={prevPage}
                 >
                   <ChevronLeftOutlined />
                 </li>
-                {
-                  pages.map((page, i) => (
-                    <li
-                      key={i}
-                      onClick={() => changePage(page)}
-                      className={`pagination-item ${page === currentPage && 'p-active'}`}
-                    >
-                      {page}
-                    </li>
-                  ))
-                }
-                <li className="pagination-item" onClick={nextPage}>
+                {pages.map((page, i) => (
+                  <li
+                    key={i}
+                    onClick={() => changePage(page)}
+                    className={`pagination-item ${
+                      page === currentPage && "p-active"
+                    }`}
+                  >
+                    {page}
+                  </li>
+                ))}
+                <li
+                  className={`pagination-item ${
+                    currentPage === pages.length && "disabled"
+                  }`}
+                  onClick={nextPage}
+                >
                   <ChevronRightOutlined />
                 </li>
               </ul>

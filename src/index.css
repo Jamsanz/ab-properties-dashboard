@@ -31,7 +31,7 @@ tr{
     @apply cursor-pointer hover:bg-[#efefef] rounded-full active:scale-110 active:animate-pulse;
   }
   .active{
-    @apply bg-[#fafafa] font-bold;
+    @apply bg-[#fafafa] text-[#1976d2] font-bold;
   }
   .pulse{
     @apply active:scale-110 active:animate-pulse;
@@ -43,9 +43,14 @@ tr{
     @apply border-2 border-red-500;
   }
   .pagination-item {
-    @apply border-2 w-8 rounded-full p-1 hover:bg-[#1976d2] hover:text-white hover:border-white active:scale-110 active:animate-pulse cursor-pointer;
+    @apply border-0 border-[#1976d2] w-7 rounded-full hover:bg-[#1976d2] hover:text-white hover:border-white active:scale-110 active:animate-pulse cursor-pointer text-[#828e99];
   }
   .p-active {
     @apply bg-[#1976d2] border-white text-white;
   }
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.6;
 }
