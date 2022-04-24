@@ -1,6 +1,6 @@
 export interface IQuestion {
   question: string;
-  qusetionDescription?: string;
+  questionDescription?: string;
   questionType?: string;
   options?: [IOption];
   isRequired?: boolean;

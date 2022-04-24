@@ -90,7 +90,7 @@ const NewForm = () => {
   };
   const handleQuestionDescription = (text: string, i: number) => {
     const optionsOfQuestion = [...questions];
-    optionsOfQuestion[i].qusetionDescription = text;
+    optionsOfQuestion[i] = {...optionsOfQuestion[i], questionDescription: text};
     setQuestions(optionsOfQuestion);
   };
 
@@ -245,7 +245,7 @@ const NewForm = () => {
             <input
               className="input-b  pb-2 text-gray-500"
               placeholder="Field Description"
-              value={question.qusetionDescription}
+              value={question.questionDescription}
               onChange={(e) => {
                 handleQuestionDescription(e.target.value, i);
               }}
@@ -333,7 +333,7 @@ const NewForm = () => {
             <input
               className="input-b  pb-2 text-gray-500"
               placeholder="Field Description"
-              value={question.qusetionDescription}
+              value={question.questionDescription}
               onChange={(e) => {
                 handleQuestionDescription(e.target.value, i);
               }}
@@ -413,7 +413,7 @@ const NewForm = () => {
             <input
               className="input-b  pb-2 text-gray-500"
               placeholder="Field Description"
-              value={question.qusetionDescription}
+              value={question.questionDescription}
               onChange={(e) => {
                 handleQuestionDescription(e.target.value, i);
               }}
