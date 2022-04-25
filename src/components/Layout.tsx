@@ -51,7 +51,7 @@ const Layout = ({ children, pageName, ...props }: IProps) => {
           <Link
             to={"/"}
             className={`hover:bg-[#fafafa] py-2 ${
-              pageName === "Data" && "active"
+              pageName === "Dashboard" && "active"
             }`}
           >
             <StorageOutlinedIcon className="mr-3" color="primary" /> Data
