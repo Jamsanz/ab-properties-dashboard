@@ -106,9 +106,8 @@ const SignIn: React.FC = (): JSX.Element => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              disabled={authenticationState.isLoading}
             >
-              {authenticationState.isLoading ? <Spinner animation="border" /> : "Sign In"}
+              {authenticationState.isLoading ? "Signing In..." : "Sign In"}
             </Button>
           </Box>
         </Box>

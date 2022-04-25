@@ -7,6 +7,7 @@ import {
 } from "../store/slices/authenticationSlice";
 import { DATA_COLLECT_TOKEN, DATA_COLLECT_USER } from "../utils/constants";
 import { http } from "../utils/utils";
+import toastr from "../utils/utils";
 
 const authenticationController = (email: string, password: string, mentor?: boolean) =>
   async (dispatch: Dispatch<any>): Promise<void> => {
