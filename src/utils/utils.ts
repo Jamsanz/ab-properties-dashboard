@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 const baseURL =
   process.env.NODE_ENV === "development"
     ? "http://localhost:5000"
-    : "https://mediaplus-server.herokuapp.com";
+    : "https://data-collect-server.herokuapp.com";
 
 export const http = axios.create({
   baseURL,
