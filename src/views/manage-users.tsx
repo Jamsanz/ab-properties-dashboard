@@ -56,6 +56,8 @@ const Users = () => {
         >
           <tr className="p-5">
             <th>#</th>
+            <th className="py-5">Name</th>
+            <th className="py-5">Role</th>
             <th className="py-5">E-mail</th>
             <th className="py-5">Password</th>
             <th className="py-5">Action</th>
@@ -78,6 +80,8 @@ const Users = () => {
                 <th scope="row" className="px-2">
                   {i + 1}
                 </th>
+                <td>{user.name}</td>
+                <td>{user.role}</td>
                 <td>{user.email}</td>
                 <td>{user.password?.substring(0, 10)} ...</td>
                 <td>

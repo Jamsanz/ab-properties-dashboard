@@ -24,7 +24,12 @@ const authenticationController = (email: string, password: string, mentor?: bool
     try {
       const result = await http.post("/login", { email, password });
       const data = (result as AxiosResponse).data.data;
-      const user = { id: data._id, email: data.email };
+      const user = {
+        id: data._id,
+        name: data.name,
+        role: data.role,
+        email: data.email,
+      };
       window.localStorage.setItem(DATA_COLLECT_USER, JSON.stringify(user));
       console.log(result.data);
       window.localStorage.setItem(DATA_COLLECT_TOKEN, `${data._id}`);

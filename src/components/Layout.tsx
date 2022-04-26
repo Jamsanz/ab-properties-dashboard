@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import { Button, Typography } from "@mui/material";
 import FolderIcon from "@mui/icons-material/Folder";
 import StorageOutlinedIcon from "@mui/icons-material/StorageOutlined";
@@ -7,7 +7,8 @@ import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { DATA_COLLECT_TOKEN } from "../utils/constants";
 import { Link } from "react-router-dom";
-import { LogOut } from "../utils/utils";
+import { getUser, LogOut } from "../utils/utils";
+import { IUser } from "../interfaces/user.interface";
 
 interface IProps {
   children?: ReactNode;
@@ -16,6 +17,7 @@ interface IProps {
 }
 
 const Layout = ({ children, pageName, ...props }: IProps) => {
+  const [user] = useState<IUser>(getUser);
   const toggle = (): void => {
     window.location.href = "/form";
   };
@@ -64,15 +66,18 @@ const Layout = ({ children, pageName, ...props }: IProps) => {
           >
             <ArticleOutlinedIcon className="mr-3" color="primary" /> Forms
           </Link>
-          <Link
-            to="/manage-users"
-            className={`hover:bg-[#fafafa] py-2 ${
-              pageName === "Manage Users" && "active"
-            }`}
-          >
-            <PeopleOutlinedIcon className="mr-3" color="primary" />
-            Manage Users
-          </Link>
+          {
+            user.role === 'superadmin' &&
+            <Link
+              to="/manage-users"
+              className={`hover:bg-[#fafafa] py-2 ${
+                pageName === "Manage Users" && "active"
+              }`}
+            >
+              <PeopleOutlinedIcon className="mr-3" color="primary" />
+              Manage Users
+            </Link>
+          }
         </div>
         <div
           onClick={logout}

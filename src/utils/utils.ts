@@ -3,6 +3,8 @@ import Cookies from "js-cookie";
 import toastr from "toastr";
 import "toastr/build/toastr.css";
 import Swal from "sweetalert2";
+import { IUser } from "../interfaces/user.interface";
+import { DATA_COLLECT_USER } from "./constants";
 
 const baseURL =
   process.env.NODE_ENV === "development"
@@ -15,6 +17,10 @@ export const http = axios.create({
     Authorization: `${Cookies.get("authorization")}`,
   },
 });
+
+export const getUser = (): IUser => {
+  return JSON.parse(window.localStorage.getItem(DATA_COLLECT_USER)!);
+};
 
 toastr.options = {
   closeButton: true,

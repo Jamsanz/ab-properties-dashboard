@@ -8,12 +8,14 @@ import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 
 const CreateUser = () => {
   const [email, setEmail] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [role, setRole] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const dispatch = useDispatch();
   const history = useHistory();
   const handleSubmit = (e: FormEvent): void => {
     e.preventDefault();
-    dispatch(postUserController({ email, password },
+    dispatch(postUserController({ name, role, email, password },
       () => {
         setEmail("");
         setPassword("");
@@ -34,6 +36,21 @@ const CreateUser = () => {
         >
           <input
             type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Name"
+            className="
+            text-xl border-b-2 focus:outline-none
+             focus:border-b-2 focus:border-b-[#1976d2]
+             "
+          />
+          <select value={role} onChange={(e) => setRole(e.target.value)}>
+            <option value="">-- Select Role --</option>
+            <option value="admin">Admin</option>
+            <option value="superadmin">Super Admin</option>
+          </select>
+          <input
+            type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="E-mail"
