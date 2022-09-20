@@ -5,11 +5,12 @@ import {
   authenticationError,
   authenticationSuccess,
 } from "../store/slices/authenticationSlice";
-import { DATA_COLLECT_TOKEN, DATA_COLLECT_USER } from "../utils/constants";
+import { AB_PROPERTIES_TOKEN, AB_PROPERTIES_USER } from "../utils/constants";
 import { http } from "../utils/utils";
 import toastr from "../utils/utils";
 
-const authenticationController = (email: string, password: string, mentor?: boolean) =>
+const authenticationController =
+  (email: string, password: string, mentor?: boolean) =>
   async (dispatch: Dispatch<any>): Promise<void> => {
     if (email === "" || email === null) {
       toastr.error("Email is required.");
@@ -24,15 +25,20 @@ const authenticationController = (email: string, password: string, mentor?: bool
     try {
       const result = await http.post("/login", { email, password });
       const data = (result as AxiosResponse).data.data;
+      if (data.role !== "admin") {
+        toastr.error("Access denied!");
+        dispatch(authenticationError());
+        return;
+      };
       const user = {
         id: data._id,
         name: data.name,
         role: data.role,
         email: data.email,
       };
-      window.localStorage.setItem(DATA_COLLECT_USER, JSON.stringify(user));
+      window.localStorage.setItem(AB_PROPERTIES_USER, JSON.stringify(user));
       console.log(result.data);
-      window.localStorage.setItem(DATA_COLLECT_TOKEN, `${data._id}`);
+      window.localStorage.setItem(AB_PROPERTIES_TOKEN, `${data._id}`);
       dispatch(authenticationSuccess(user));
       window.location.reload();
     } catch (error) {

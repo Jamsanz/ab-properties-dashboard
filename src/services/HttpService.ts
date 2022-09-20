@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios";
-import { DATA_COLLECT_TOKEN, DATA_COLLECT_USER } from "../utils/constants";
+import { AB_PROPERTIES_TOKEN, AB_PROPERTIES_USER } from "../utils/constants";
 
-class HttpService{
+class HttpService {
   private baseUrl: string;
   private http: AxiosInstance;
 
@@ -16,19 +16,21 @@ class HttpService{
   }
 
   public httpClient(): AxiosInstance {
-    const headers: {[key: string]: any} = {};
+    const headers: { [key: string]: any } = {};
 
     if (this.baseUrl === process.env.REACT_APP_NJFP_ELEARNING_SERVER_URL) {
-      headers['Authorization'] = window.localStorage.getItem(DATA_COLLECT_TOKEN) ?
-        `${window.localStorage.getItem(DATA_COLLECT_TOKEN)}` :
-        '';
+      headers["Authorization"] = window.localStorage.getItem(
+        AB_PROPERTIES_TOKEN
+      )
+        ? `${window.localStorage.getItem(AB_PROPERTIES_TOKEN)}`
+        : "";
     }
 
-    const user = window.localStorage.getItem(DATA_COLLECT_USER);
+    const user = window.localStorage.getItem(AB_PROPERTIES_USER);
     if (user) {
-      headers[DATA_COLLECT_USER] = (JSON.parse(user)).email;
+      headers[AB_PROPERTIES_USER] = JSON.parse(user).email;
     }
-    
+
     // this.http.defaults.headers = headers;
     return this.http;
   }

@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import authenticationController from "../../controllers/authentication.controller";
 import { IAuthentication } from "../../store/slices/authenticationSlice";
+import CircularProgress from '@mui/material/CircularProgress';
 
 function Copyright(props: any) {
   return (
@@ -24,7 +25,7 @@ function Copyright(props: any) {
     >
       {"Copyright © "}
       <Link color="inherit" href="/">
-        Data-collect
+        Ab-properties
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -61,11 +62,11 @@ const SignIn: React.FC = (): JSX.Element => {
           }}
           className="border-2 border-white rounded-md p-5 shadow-lg"
         >
-          <Avatar sx={{ m: 1, background: '#1976d2' }}>
-            <PersonIcon />
+          <Avatar sx={{ m: 1, background: 'transparent' }}>
+            <img src="./adaptive-icon.png" />
           </Avatar>
           <Typography component={"h1"} variant="h5">
-            Data - Collect
+            Ab - Properties
           </Typography>
           {/* <Typography component="h1" variant="h5">
             Sign In
@@ -104,9 +105,12 @@ const SignIn: React.FC = (): JSX.Element => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={[{ mt: 3, mb: 2, background: "#FFB34D" }, { '&:hover': { backgroundColor: '#FFB34E'}}]}
             >
-              {authenticationState.isLoading ? "Signing In..." : "Sign In"}
+              {authenticationState.isLoading ?
+                <CircularProgress size={23} color="inherit" />
+                : "Sign in"
+              }
             </Button>
           </Box>
         </Box>

@@ -20,7 +20,7 @@ const postUserController =
       return;
     }
     try {
-      const response = await http.post(`/users`, user);
+      const response = await http.post(`/signup`, user);
       dispatch(postUserSuccess(response.data));
       toastr.success(response.data.message);
       callback();

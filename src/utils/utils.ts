@@ -4,12 +4,12 @@ import toastr from "toastr";
 import "toastr/build/toastr.css";
 import Swal from "sweetalert2";
 import { IUser } from "../interfaces/user.interface";
-import { DATA_COLLECT_USER } from "./constants";
+import { AB_PROPERTIES_USER } from "./constants";
 
 const baseURL =
   process.env.NODE_ENV === "development"
     ? "http://localhost:5000"
-    : "https://data-collect-server.herokuapp.com";
+    : "https://ab-properties-backend.herokuapp.com";
 
 export const http = axios.create({
   baseURL,
@@ -19,7 +19,7 @@ export const http = axios.create({
 });
 
 export const getUser = (): IUser => {
-  return JSON.parse(window.localStorage.getItem(DATA_COLLECT_USER)!);
+  return JSON.parse(window.localStorage.getItem(AB_PROPERTIES_USER)!);
 };
 
 toastr.options = {
