@@ -1,36 +1,59 @@
 import { Button } from "@mui/material";
-import React, { FormEvent, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Layout from "../components/Layout";
 import postUserController from "../controllers/postUser.controller";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { IUser } from "../interfaces/user.interface";
+import { getUserSelector, getUserSuccess } from "../store/slices/getUser";
 
 const CreateUser = () => {
-  const [email, setEmail] = useState<string>("");
-  const [lName, setLName] = useState<string>("");
-  const [fName, setFName] = useState<string>("");
-  const [role, setRole] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [userData, setUserData] = useState<IUser | null>(null);
   const [show, setShow] = useState<boolean>(false);
+
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const userState = useSelector(getUserSelector);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setUserData({ ...userData!, [name]: value });
+  }
   const handleSubmit = (e: FormEvent): void => {
     e.preventDefault();
-    dispatch(postUserController({ first_name: fName, last_name: lName, role, email, password },
+    dispatch(postUserController(userData!,
       () => {
-        setEmail("");
-        setPassword("");
-        setFName("");
-        setLName("");
-        setRole("");
-      }));
+        !userState.data &&
+        setUserData({
+          first_name: "",
+          last_name: "",
+          role: "",
+          password: "",
+          email: ""
+        })
+      }, userState.data?._id && userState.data._id));
   };
 
+  useEffect(() => {
+    if (userState.data) {
+      setUserData({
+        first_name: userState.data.first_name,
+        last_name: userState.data.last_name,
+        role: userState.data.role,
+        password: userState.data.password,
+        email: userState.data.email
+      });
+    }
+    return () => {
+      dispatch(getUserSuccess(null));
+    }
+  }, [userState.data]);
   return (
-    <Layout pageName="Create User">
+    <Layout pageName={userState.data ? "Manage User" : "Create User"}>
       <div className="mb-3 md:ml-0 ml-3 ">
         <Button variant="outlined" onClick={() => history.goBack()}>
           <ArrowBackOutlinedIcon color="primary" />
@@ -43,48 +66,58 @@ const CreateUser = () => {
         >
           <input
             type="text"
-            value={fName}
-            onChange={(e) => setFName(e.target.value)}
+            value={userData?.first_name}
+            name="first_name"
+            onChange={handleChange}
             placeholder="First Name"
             className="
             md:text-xl text-md border-b-2 focus:outline-none
              focus:border-b-2 focus:border-b-[#1976d2]
              "
+            disabled={!!userState.data}
           />
           <input
             type="text"
-            value={lName}
-            onChange={(e) => setLName(e.target.value)}
+            value={userData?.last_name}
+            onChange={handleChange}
+            name="last_name"
             placeholder="Last Name"
             className="
             text-md md:text-xl border-b-2 focus:outline-none
              focus:border-b-2 focus:border-b-[#1976d2]
              "
+            disabled={!!userState.data}
           />
-          <select value={role} onChange={(e) => setRole(e.target.value)} className="
+          <select value={userData?.role} onChange={handleChange} className="
             text-md md:text-xl border-b-2 focus:outline-none
              focus:border-b-2 focus:border-b-[#1976d2]
-             ">
-            <option value="" disabled className="text-gray-300">-- Select User Role --</option>
+             "
+            name="role"
+            disabled={!!userState.data}
+          >
+            <option value="" disabled className="text-gray-300">-- Select User Role --</option>={!!userState.data}
             <option value="user">User</option>
             <option value="admin">Admin</option>
             {/* <option value="super admin">Super Admin</option> */}
           </select>
           <input
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            name="email"
+            value={userData?.email}
+            onChange={handleChange}
             placeholder="E-mail"
             className="
             text-md md:text-xl border-b-2 focus:outline-none
              focus:border-b-2 focus:border-b-[#1976d2]
              "
+            disabled={!!userState.data}
           />
           <div className="inline-flex border-b-2 focus-within:border-b-2 focus-within:border-b-[#1976d2]">
             <input
               type={show ? "text" : "password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={userData?.password}
+              onChange={handleChange}
+              name="password"
               placeholder="Password"
               className="text-md md:text-xl focus:outline-none flex-1"
             />
@@ -96,7 +129,9 @@ const CreateUser = () => {
           </div>
           <div className="">
             <Button type="submit" variant="contained">
-              Create User
+              {
+                userState.data ? "Update" : "Create User"
+              }
             </Button>
           </div>
         </form>

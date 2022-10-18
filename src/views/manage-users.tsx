@@ -7,10 +7,12 @@ import { IUser } from "../interfaces/user.interface";
 import usersController from "../controllers/users.controller";
 import toastr, { DeleteAlert, http } from "../utils/utils";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useHistory } from "react-router-dom";
 import { ChevronLeftOutlined, ChevronRightOutlined } from "@mui/icons-material";
+import getUserController from "../controllers/getUserController";
 
 
 const Users = () => {
@@ -37,8 +39,13 @@ const Users = () => {
     }
   };
 
+  const handleEdit = (id: string): void => {
+    dispatch(getUserController(id, () => {
+      history.push("/create-user");
+    }))
+  }
 
-  const handleDelete = (id: string) => {
+  const handleDelete = (id: string): void => {
     DeleteAlert().then((result) => {
       if (result.isConfirmed) {
         http
@@ -112,6 +119,10 @@ const Users = () => {
                   <td className="px-6 py-4">{user.email}</td>
                   <td className="px-6 py-4">{user.password?.substring(0, 10)} ...</td>
                   <td className="px-6 py-4">
+                    <EditOutlinedIcon
+                      onClick={() => handleEdit(user._id!)}
+                      className="action-btn mr-1"
+                    />
                     <DeleteOutlinedIcon
                       onClick={() => handleDelete(user._id!)}
                       className="action-btn"
