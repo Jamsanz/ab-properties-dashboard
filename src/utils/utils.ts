@@ -9,7 +9,7 @@ import { AB_PROPERTIES_USER } from "./constants";
 const baseURL =
   process.env.NODE_ENV === "development"
     ? "http://localhost:5000"
-    : "https://ab-properties-backend.herokuapp.com";
+    : "https://ab-properties-backend.onrender.com";
 
 export const http = axios.create({
   baseURL,
